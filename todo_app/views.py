@@ -9,7 +9,7 @@ from .models import Task, Tag
 
 class TaskCreateView(CreateView):
     model = Task
-    fields = ["content", "deadline", "tags", "done"]
+    fields = ["content", "deadline", "tag", "done"]
     success_url = reverse_lazy("todo_app:task-list")
 
 
@@ -20,7 +20,7 @@ class TaskListView(ListView):
 
 class TaskUpdateView(UpdateView):
     model = Task
-    fields = ["content", "deadline", "tags", "done"]
+    fields = ["content", "deadline", "tag", "done"]
     success_url = reverse_lazy("todo_app:task-list")
 
 
@@ -39,7 +39,7 @@ def task_done_view(request, pk):
 class TagCreateView(CreateView):
     model = Tag
     fields = ["name"]
-    success_url = reverse_lazy("todo_app:tags-list")
+    success_url = reverse_lazy("todo_app:tag-list")
 
 
 class TagListView(ListView):
@@ -50,9 +50,9 @@ class TagListView(ListView):
 class TagUpdateView(UpdateView):
     model = Tag
     fields = ["name"]
-    success_url = reverse_lazy("todo_app:tags-list")
+    success_url = reverse_lazy("todo_app:tag-list")
 
 
 class TagDeleteView(DeleteView):
     model = Tag
-    success_url = reverse_lazy("todo_app:tags-list")
+    success_url = reverse_lazy("todo_app:tag-list")
