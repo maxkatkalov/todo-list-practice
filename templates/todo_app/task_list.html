@@ -16,6 +16,8 @@
                   <th scope="col">Todo item</th>
                   <th scope="col">Status</th>
                   <th scope="col">Tags</th>
+                  <th scope="col">Created</th>
+                  <th scope="col">Deadline</th>
 
                   <th scope="col" class="text-center">Actions</th>
                 </tr>
@@ -26,7 +28,9 @@
                      <tr>
                        <td>{{ task.content }}</td>
                        <td>{% if not task.done %}In progress {% else %}Finished{% endif %}</td>
-                       <td>{{ task.tags }}</td>
+                       <td>{% for tag in task.tags.all %} {{ tag.name }}; {% empty %}No tags{% endfor %}</td>
+                       <td>{{ task.datetime}}</td>
+                       <td>{% if task.deadline %}{{ task.deadline }}{% else %}No deadline{% endif %}</td>
                        <td>
                         {% if task.done %}<a href="{% url 'todo_app:task-done-undone' task.pk %}" class="btn btn-success">Undone</a>{% else %}<a class="btn btn-success" href="{% url 'todo_app:task-done-undone' task.pk %}">Done</a> {% endif %}
                          <a href="{% url 'todo_app:task-update' task.pk %}" class="btn btn-primary">Update</a>

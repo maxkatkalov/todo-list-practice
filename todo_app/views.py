@@ -9,18 +9,18 @@ from .models import Task, Tag
 
 class TaskCreateView(CreateView):
     model = Task
-    fields = ["content", "deadline", "tag", "done"]
+    fields = ["content", "deadline", "tags", "done"]
     success_url = reverse_lazy("todo_app:task-list")
 
 
 class TaskListView(ListView):
     model = Task
-    paginate_by = 4
+    paginate_by = 3
 
 
 class TaskUpdateView(UpdateView):
     model = Task
-    fields = ["content", "deadline", "tag", "done"]
+    fields = ["content", "deadline", "tags", "done"]
     success_url = reverse_lazy("todo_app:task-list")
 
 
