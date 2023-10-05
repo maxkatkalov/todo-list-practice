@@ -1,0 +1,57 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
+
+            <h4 class="text-center my-3 pb-3">To Do App <a href="{% url 'todo_app:task-create' %}" class="btn btn-primary">&#10010;</a></h4>
+            {% if object_list %}
+              <table class="table mb-4">
+                <thead>
+                <tr>
+                  <th scope="col">Todo item</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Tags</th>
+                  <th scope="col">Created</th>
+                  <th scope="col">Deadline</th>
+
+                  <th scope="col" class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                    {% for task in object_list %}
+                     <tr>
+                       <td>{{ task.content }}</td>
+                       <td>{% if not task.done %}In progress {% else %}Finished{% endif %}</td>
+                       <td>{% for tag in task.tags.all %} {{ tag.name }}; {% empty %}No tags{% endfor %}</td>
+                       <td>{{ task.datetime}}</td>
+                       <td>{% if task.deadline %}{{ task.deadline }}{% else %}No deadline{% endif %}</td>
+                       <td>
+                        {% if task.done %}<a href="{% url 'todo_app:task-done-undone' task.pk %}" class="btn btn-success">Undone</a>{% else %}<a class="btn btn-success" href="{% url 'todo_app:task-done-undone' task.pk %}">Done</a> {% endif %}
+                         <a href="{% url 'todo_app:task-update' task.pk %}" class="btn btn-primary">Update</a>
+                         <a href="{% url 'todo_app:task-delete' task.pk %}" class="btn btn-danger">Delete</a>
+                       </td>
+                     </tr>
+                    {% endfor %}
+                  {% else %}
+                    <h2>No tasks yet</h2>
+                  {% endif %}
+                     </tbody>
+
+                   </table>
+              {% block paginator %}
+                {% include 'includes/paginator.html' %}
+              {% endblock %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
